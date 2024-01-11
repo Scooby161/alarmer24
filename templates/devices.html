@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emails</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 60%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 2px;
+        }
+        th {
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
+        input[type="text"] {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Устройства</h1>
+    <button id="rootLinkButton">Активные</button>
+    <button id="falseLinkButton">Закрытые</button>
+    <button id="deviceLinkButton">Устройства</button>
+    <table id="emailTable">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>subject</th>
+            <th>addr</th>
+            <th>temp</th>
+            <th>time</th>
+            <th>occurred</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for email in data %}
+        <tr>
+            {% for cell in email %}
+            <td>{{ cell }}</td>
+            {% endfor %}
+            <td>
+                <input type="text" class="newText" onchange="addNewText(this)">
+                <button onclick="addNewText(this)">Add</button>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#emailTable').DataTable({
+                "paging": false,
+                "searching": true,
+                "info": false
+            });
+        });
+
+        function addNewText(button) {
+    var newText = $(button).prev('.newText').val();  // Получаем значение input в текущей строке
+    var row = $(button).closest('tr');
+    var id = row.find('td:first').text();
+
+    fetch('/update-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id: id, newText: newText }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Update successful', data);
+        row.find('td:nth-last-child(2)').text(newText);
+    })
+    .catch(error => {
+        console.error('Update failed', error);
+    });
+}
+document.getElementById('rootLinkButton').onclick = function() {
+    window.location.href = "/active";
+};
+document.getElementById('falseLinkButton').onclick = function() {
+    window.location.href = "/false";
+};
+document.getElementById('deviceLinkButton').onclick = function() {
+    window.location.href = "/devices";
+};
+    </script>
+</body>
+</html>
