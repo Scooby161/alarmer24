@@ -1,0 +1,66 @@
+table {
+            border-collapse: collapse;
+            width: 50%;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 1px;
+        }
+        th {
+            background-color: #f2f2f2;
+            cursor: pointer;
+        }
+        .button {
+  background-color: #4CAF50; /* Зеленый цвет */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+/* При наведении курсора */
+#emailTable table {
+  border-collapse: collapse;
+}
+/* При наведении курсора */
+.button:hover {
+  background-color: #45a049;
+}
+#emailTable tbody tr:hover {
+  background-color: #20B2AA;
+}
+tr:hover td{
+  border: 1px solid black;
+}
+
+select{
+  width: 150px;
+      padding: 5px;
+      background-color: white;
+      color: black;
+  }
+    .cheked {
+      width: 150px;
+      padding: 10px;
+      background-color: #ADFF2F;
+      color: black;
+    }
+
+    .control {
+      width: 150px;
+      padding: 10px;
+      background-color: #FF4500;
+      color: white;
+    }
+    .order {
+      width: 150px;
+      padding: 10px;
+      background-color: #FF8C00;
+      color: black;
+    }

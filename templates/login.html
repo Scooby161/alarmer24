@@ -41,36 +41,45 @@
             <label for="password">Пароль:</label>
             <input type="password" id="password" name="password" required>
             <input type="submit" value="Войти" onclick="loginUser()" >
-            <input type="submit" value="регистрация" onclick="registerUser()">
         </form>
+        <div id="error-box"></div>
     </div>
 <script>
-        // Функция для отправки запроса на логин
-function loginUser() {
-    event.preventDefault(); // Предотвращаем отправку формы по умолчанию
-    var username = document.getElementById("username").value;
-    var password = document.getElementById("password").value;
-    fetch('/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username: username, password: password })
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Предположим, что ответ содержит поле 'token' с токеном
-        const token = data.token;
-        // После успешного логина, сохраняем токен в localStorage
-        localStorage.setItem('token', token);
+function showError(message) {
+    const errorBox = document.getElementById('error-box');
+    errorBox.innerHTML = message;
+  }
 
-        // Теперь перенаправляем пользователя на защищенную страницу
-        window.location.href = '/devices';
-    })
-    .catch(error => console.error('Ошибка при логине:', error));
-}
-
-
+  // Функция для отправки запроса на логин
+  function loginUser() {
+      event.preventDefault();
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+      fetch('/login', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ username: username, password: password })
+      })
+          .then(response => {
+              if (response.status === 401) {
+                  showError('Неправильный логин или пароль');
+              } else if (response.ok) {
+                  return response.json();
+              } else {
+                  throw new Error('Ошибка HTTP: ' + response.status);
+              }
+          })
+          .then(data => {
+              const token = data.token;
+              localStorage.setItem('token', token);
+              window.location.href = '/devices';
+          })
+          .catch(error => {
+              showError('Ошибка при логине: ' + error.message);
+          });
+  }
 // Функция для отправки запроса на регистрацию
 function registerUser() {
     event.preventDefault(); // Предотвращаем отправку формы по умолчанию
@@ -83,14 +92,16 @@ function registerUser() {
         },
         body: JSON.stringify({ username: username, password: password })
     })
-    .then(response => response.json())
-    .then(data => console.log('Ответ на запрос регистрации:', data))
-    .catch(error => console.error('Ошибка при регистрации:', error));
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Ошибка HTTP: ' + response.status);
+            }
+        })
+        .then(data => console.log('Ответ на запрос регистрации:', data))
+        .catch(error => console.error('Ошибка при регистрации:', error));
 }
-
-    </script>
+</script>
 </body>
 </html>
-
-
-

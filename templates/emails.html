@@ -3,27 +3,16 @@
 <head>
     <title>Emails</title>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-    <style>
-        table {
-            border-collapse: collapse;
-            width: 60%;
-        }
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 2px;
-        }
-        th {
-            background-color: #f2f2f2;
-            cursor: pointer;
-        }
-    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+     <script src="static/js/emails.js"></script>
+    <link rel="stylesheet" href="static/css/emails.css">
 </head>
 <body>
     <h1>Аварии</h1>
-     <button id="rootLinkButton">Активные</button>
-    <button id="falseLinkButton">Закрытые</button>
-    <button id="deviceLinkButton">Устройства</button>
+     <button id="rootLinkButton" class="button">Активные</button>
+<button id="falseLinkButton" class="button">Закрытые</button>
+<button id="deviceLinkButton" class="button">Устройства</button>
     <table id="emailTable">
         <thead>
         <tr>
@@ -31,91 +20,39 @@
             <th>subject</th>
             <th>addr</th>
             <th>alarm</th>
-            <th>temp</th>
             <th>time</th>
             <th>occurred</th>
             <th>comment</th>
+            <th>status</th>
             <th>add comment</th>
         </tr>
         </thead>
         <tbody>
-        {% for email in data %}
+        {% for email in res %}
         <tr>
-            {% for cell in email %}
+            {% for cell in email[:-2] %}
             <td>{{ cell }}</td>
             {% endfor %}
+            <td title={{email[-2]}}>{{email[-2]}}</td>
+            <td>
+            <select class="{{email[-1]}}" onchange="addStatus(this)">
+                  <option value="cheked">cheked</option>
+                  <option value="control">control</option>
+                <option value="order">order</option>
+                 <option selected disabled value="{{email[-1]}}">{{ email[-1] }}</option>
+                <option value="-">Удалить</option>
+            </select>
+            </td>
             <td>
                 <input type="text" class="newText" onchange="addNewTextON(this)">
                 <button onclick="addNewText(this)">Add</button>
             </td>
+
         </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-     <script>
-        $(document).ready(function() {
-            $('#emailTable').DataTable({
-                "paging": false,
-                "searching": true,
-                "info": false
-            });
-        });
 
-            function addNewTextON(input) {
-    var newText = $(input).val();  // Получаем значение input, на котором произошло изменение
-    var row = $(input).closest('tr');
-    var id = row.find('td:first').text();
-
-    fetch('/update-email', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: id, newText: newText }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Update successful', data);
-        row.find('td:nth-last-child(2)').text(newText);
-    })
-    .catch(error => {
-        console.error('Update failed', error);
-    });
-}
-
-        function addNewText(button) {
-    var newText = $(button).prev('.newText').val();  // Получаем значение input в текущей строке
-    var row = $(button).closest('tr');
-    var id = row.find('td:first').text();
-
-    fetch('/update-email', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: id, newText: newText }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Update successful', data);
-        row.find('td:nth-last-child(2)').text(newText);
-    })
-    .catch(error => {
-        console.error('Update failed', error);
-    });
-}
-    document.getElementById('rootLinkButton').onclick = function() {
-    window.location.href = "/active";
-};
-document.getElementById('falseLinkButton').onclick = function() {
-    window.location.href = "/false";
-};
-document.getElementById('deviceLinkButton').onclick = function() {
-    window.location.href = "/devices";
-};
-    </script>
 </body>
 </html>

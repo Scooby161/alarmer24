@@ -3,60 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dropdown with Checkboxes</title>
   <style>
-    .dropdown {
-      position: relative;
-      display: inline-block;
+  select{
+  width: 150px;
+      padding: 10px;
+      background-color: white;
+      color: black;
+  }
+    .one {
+      width: 150px;
+      padding: 10px;
+      background-color: blue;
+      color: white;
     }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #f9f9f9;
-      min-width: 160px;
-      border: 1px solid #aaa;
-      z-index: 1;
-    }
-    .dropdown-content label {
-      display: block;
-      margin: 5px 0;
+
+    .two {
+      width: 150px;
+      padding: 10px;
+      background-color: red;
+      color: white;
     }
   </style>
+
+  <script>
+    function addStatus(select) {
+      var selectedValue = select.value;
+      select.className = selectedValue;
+    }
+  </script>
+  <title>Select Background Color Example</title>
 </head>
 <body>
-
-<h2>Dropdown with Checkboxes</h2>
-
-<div class="dropdown">
-  <select onclick="showCheckboxes()">
-    <option>Select Options</option>
+  <select onchange="addStatus(this)">
+    <option value="one">Blue</option>
+    <option value="two">Red</option>
   </select>
-  <div id="checkboxes" class="dropdown-content">
-    <label><input type="checkbox" value="option1">Option 1</label>
-    <label><input type="checkbox" value="option2">Option 2</label>
-    <label><input type="checkbox" value="option3">Option 3</label>
-  </div>
-</div>
-
-<script>
-  function showCheckboxes() {
-    var checkboxes = document.getElementById("checkboxes");
-    if (checkboxes.style.display === "none" || checkboxes.style.display === "") {
-      checkboxes.style.display = "block";
-    } else {
-      checkboxes.style.display = "none";
-    }
-  }
-
-  window.onclick = function(event) {
-    if (!event.target.matches('select')) {
-      var checkboxes = document.getElementById("checkboxes");
-      if (checkboxes.style.display === "block") {
-        checkboxes.style.display = "none";
-      }
-    }
-  }
-</script>
 </body>
 </html>
-
