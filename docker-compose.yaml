@@ -2,6 +2,7 @@ version: '3.8'
 services:
   db:
     image: postgres
+    container_name: db
     ports:
       - "5439:5432"
     environment:
@@ -14,25 +15,31 @@ services:
       - app-network
   backend:
     build: .
+    container_name: backend
     depends_on:
       - db
     ports:
-      - "8080:5001"
+      - "8081:5001"
     environment:
       - TZ=Europe/Moscow
     networks:
       - app-network
   email_service:
     build: ./emails_service/
+    container_name: email_service
     environment:
       - TZ=Europe/Moscow
-      - ML_USER=sm@es-company.ru #УЧЕТНЫЕ ДАННЫЕ ДЛЯ ПОЧТЫ
+     #УЧЕТНЫЕ ДАННЫЕ ДЛЯ ПОЧТЫ
+      - ML_USER=sm@es-company.ru
       - ML_PASSWORD=fhcTxw7svNSPsCf5cyuM
       - ML_HOST=imap.mail.ru
+     #Учетные данные для таблицы
+      - TABLE_ID=1SaBKxMO01dobyeMd_1DK5pYA-kG37btXGM4aIRssXCo
     networks:
       - app-network
     depends_on:
       - db
+
 networks:
   app-network:
     driver: bridge

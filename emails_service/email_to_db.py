@@ -13,7 +13,7 @@ SERVICE_ACCOUNT_FILE = 'alarmer24-key.json'
 creds = service_account.Credentials.from_service_account_file(
     SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 service = build('sheets', 'v4', credentials=creds)
-spreadsheet_id = '1SaBKxMO01dobyeMd_1DK5pYA-kG37btXGM4aIRssXCo'
+spreadsheet_id = os.environ.get('TABLE_ID')
 
 def create_conn():
     try:
