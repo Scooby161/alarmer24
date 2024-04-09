@@ -41,15 +41,30 @@ groups:
 
 - name: containers
   rules:
-  - alert: jenkins_down
-    expr: absent(container_memory_usage_bytes{name="jenkins"})
+  - alert: db_down
+    expr: absent(container_memory_usage_bytes{name="db"})
     for: 30s
     labels:
       severity: critical
     annotations:
-      summary: "Jenkins down"
-      description: "Jenkins container is down for more than 30 seconds."
-
+      summary: "db down"
+      description: "База упала"
+  - alert: backend_down
+     expr: absent(container_memory_usage_bytes{name="backend"})
+     for: 30s
+     labels:
+       severity: critical
+    annotations:
+      summary: "backend dowm"
+      description: "Веб интерфейс упал"
+  - alert: email_down
+     expr: absent(container_memory_usage_bytes{name="email_service"})
+     for: 30s
+     labels:
+       severity: critical
+    annotations:
+      summary: "email_service dowm"
+      description: "Почта  упала"
   - alert: jenkins_high_cpu
     expr: sum(rate(container_cpu_usage_seconds_total{name="jenkins"}[1m])) / count(node_cpu_seconds_total{mode="system"}) * 100 > 10
     for: 30s

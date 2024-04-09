@@ -9,7 +9,7 @@ from datetime import datetime
 import os
 
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets']
-SERVICE_ACCOUNT_FILE = 'alarmer24-key.json'
+SERVICE_ACCOUNT_FILE = 'cruds.json'
 creds = service_account.Credentials.from_service_account_file(
     SERVICE_ACCOUNT_FILE, scopes=SCOPES)
 service = build('sheets', 'v4', credentials=creds)

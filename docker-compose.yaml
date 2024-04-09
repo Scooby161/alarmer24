@@ -19,7 +19,7 @@ services:
     depends_on:
       - db
     ports:
-      - "8081:5001"
+      - "80:5001"
     environment:
       - TZ=Europe/Moscow
     networks:
@@ -30,11 +30,11 @@ services:
     environment:
       - TZ=Europe/Moscow
      #УЧЕТНЫЕ ДАННЫЕ ДЛЯ ПОЧТЫ
-      - ML_USER=sm@es-company.ru
-      - ML_PASSWORD=fhcTxw7svNSPsCf5cyuM
-      - ML_HOST=imap.mail.ru
+      - ML_USER=rst\monitoring_rst3
+      - ML_PASSWORD=Qq12345
+      - ML_HOST=mail.land-group.ru
      #Учетные данные для таблицы
-      - TABLE_ID=1SaBKxMO01dobyeMd_1DK5pYA-kG37btXGM4aIRssXCo
+      - TABLE_ID=11lcbsr5nQmcOtL5rcT4YOAyMS1ix6db1E8VWnZq3YLk
     networks:
       - app-network
     depends_on:
