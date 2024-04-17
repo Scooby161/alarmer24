@@ -16,41 +16,53 @@
     <table id="emailTable">
         <thead>
         <tr>
-            <th>ID dev</th>
-            <th>subject</th>
-            <th>addr</th>
-            <th>alarm</th>
-            <th>time</th>
-            <th>occurred</th>
-            <th>comment</th>
-            <th>status</th>
-            <th>add comment</th>
+            <th>ID</th>
+            <th>Объект</th>
+            <th>Адрес</th>
+            <th>Авария</th>
+            <th>Время блока</th>
+            <th>Время Сервера</th>
+            <th>Комментарий</th>
+            <th>Статус</th>
+            <th>Поле для комментария</th>
         </tr>
         </thead>
         <tbody>
         {% for email in res %}
-        <tr>
-            {% for cell in email[:-2] %}
+        <tr title="{{email[0]}}">
+            {% for cell in email[0:-3] %}
             <td>{{ cell }}</td>
             {% endfor %}
-            <td title={{email[-2]}}>{{email[-2]}}</td>
+            <td title="{{email[-2]}}">{{email[-3]}}</td>
             <td>
             <select class="{{email[-1]}}" onchange="addStatus(this)">
-                  <option value="cheked">cheked</option>
-                  <option value="control">control</option>
-                <option value="order">order</option>
-                 <option selected disabled value="{{email[-1]}}">{{ email[-1] }}</option>
-                <option value="-">Удалить</option>
+                  <option value="Cheked" class="Cheked">Cheked</option>
+                  <option value="Control" class="Control">Control</option>
+                <option value="Order" class="Order">Order</option>
+                <option value="Comment" class="Comment">Comment</option>
+                 <option selected disabled value="{{email[-1]}}" >{{ email[-1] }}</option>
+                <option value="-">Пусто</option>
             </select>
             </td>
-            <td>
+            <td class="cellWithButton">
                 <input type="text" class="newText" onchange="addNewTextON(this)">
-                <button onclick="addNewText(this)">Add</button>
+                <button class= "button_add" onclick="addNewText(this)">Add</button>
             </td>
 
         </tr>
         {% endfor %}
         </tbody>
+        <tfoot class="foot">
+        <th>ID</th>
+            <th>Объект</th>
+            <th>Адресс</th>
+            <th>Авария</th>
+            <th>Время блока</th>
+            <th>Время Сервера</th>
+            <th>Комментарий</th>
+            <th>Статус</th>
+            <th>Поле для комментария</th>
+        </tfoot>
     </table>
 
 

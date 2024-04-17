@@ -39,7 +39,7 @@ def create_table():
                         id SERIAL PRIMARY KEY,
                         subject TEXT NOT NULL,
                         device_name TEXT NOT NULL,
-                        comment TEXT,
+                        comment TEXT DEFAULT ' ',
                         time_text TEXT NOT NULL
                     )
                 ''')
@@ -53,11 +53,19 @@ def create_table():
                         occurred TEXT NOT NULL,
                         time TEXT NOT NULL,
                         s_active TEXT,
-                        status TEXT,
+                        status TEXT DEFAULT ' ',
                         device_id INTEGER, 
                         FOREIGN KEY (device_id) REFERENCES devices(id)
                     )
                 ''')
+        cursor.execute('''
+                            CREATE TABLE IF NOT EXISTS block (
+                                id SERIAL PRIMARY KEY,
+                                subject TEXT NOT NULL,
+                                device_id TEXT NOT NULL,
+                                time TEXT NOT NULL
+                            )
+                        ''')
         conn.commit()
     except psycopg2.Error as e:
         print('An error occurred:', str(e))
@@ -127,6 +135,9 @@ def extract_data(string):
         "PoA ": "alarm",
         "Pc ": "alarm",
         "PoB ": "alarm",
+        "Fan": "alarm",
+        "Oil": "alarm",
+        "IO": "alarm",
     }
     for keyword, key in split_keywords.items():
         split_string = string.split(keyword)
@@ -152,6 +163,9 @@ def extract_data(string):
         'time': datetime.now().strftime("%d/%m/%y %H:%M"),
         'clear': data['clear']
     }
+    split_string = string.split("Test Alarm")
+    if len(split_string) > 1:
+        return test_counter(data)
     if data["clear"] == "true":
         delete_email_from_db(email_data)
         return delete_email_from_sheet(data)
@@ -159,7 +173,73 @@ def extract_data(string):
     add_email_to_sheet(email_data)
     add_email_to_db(email_data)
 
+def test_counter(data):
+    add_block(data)
+    try:
+        cursor.execute("UPDATE block SET time = %s WHERE subject = %s AND device_id = %s",
+                               (data['occurred'], data['ems'], data['addr']))
+        conn.commit()
+        print("Row in database updated.")
+    except psycopg2.Error as e:
+        print("An error occurred:", e)
 
+
+def check_records():
+        # Получаем текущее время
+        current_time = datetime.now()
+
+        # Выполняем запрос к базе данных
+        cursor.execute("SELECT * FROM block")
+        rows = cursor.fetchall()
+
+        # Проходимся по каждой записи
+        for row in rows:
+            # Получаем время из записи
+            print(row[3])
+            record_time = datetime.strptime(row[3].strip(), '%d/%m/%y %H:%M')
+
+            # Считаем разницу во времени
+            time_difference = current_time - record_time
+
+            email_data = {
+                'subject': row[1],
+                'alarm': f"offline block",
+                'addr': row[2],
+                'occurred': row[3],
+                'time': datetime.now().strftime("%d/%m/%y %H:%M"),
+                'clear': 'false'
+            }
+            # Если разница больше часа, выводим сообщение в консоль
+            if time_difference.total_seconds() > 10800:
+                add_email_to_db(email_data)
+                add_email_to_sheet(email_data)
+                print(f"Время записи отличается от текущего на более чем час: {row}")
+            else:
+                data = {
+                    "ems": row[1],
+                    "alarm": f"offline block",
+                    "addr": row[2],
+                    "occurred": row[3],
+                    "clear": "false"
+                }
+                delete_email_from_db(email_data)
+                delete_email_from_sheet(data)
+
+def add_block(data):
+    cursor.execute("SELECT * FROM block WHERE subject = %s AND device_id = %s",
+                   (data['ems'], data['addr'],))
+    row = cursor.fetchone()
+    if row is None:
+        cursor.execute("INSERT INTO block (subject, device_id,time) VALUES (%s, %s, %s)",
+                       (data['ems'], data['addr'], data['occurred']))
+        conn.commit()
+        print(f"add device to table {data['addr']}")
+        cursor.execute("SELECT * FROM devices WHERE subject = %s AND device_name = %s",
+                       (data['ems'], data['addr'],))
+        row = cursor.fetchone()
+        return row[0]
+    else:
+        return row[0]
 def add_device(email_data):
     cursor.execute("SELECT * FROM devices WHERE subject = %s AND device_name = %s",
                    (email_data['subject'], email_data['addr'],))
@@ -317,17 +397,14 @@ def process_emails():
                 result, data = mail.fetch(email_id, '(RFC822)')
                 raw_email = data[0][1]
                 email_message = email.message_from_bytes(raw_email)
-
                 get_email_body(email_message)
             disconnect_imap_connection(mail)
-
             time.sleep(10)
-
+            check_records()
         except imaplib.IMAP4_SSL.abort as e:
             print(f'IMAP connection aborted: {e}')
             # Обработка возникшего исключения (например, переподключение)
-        except Exception as e:
-            print(f'ALL CRASHED {e}')
+
 
 
         time.sleep(20)

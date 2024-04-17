@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "alarmer24",
+  "private_key_id": "264bf44ca6e3a7725f6dad22fe5c649330fc7636",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC1KOyiKLmbVTlv\ns/CWvqcYhLTa0BpSXITQ7x7qcZzjZLpcpMTDjA3SjTrupPPn0nI62PK7SlBydmuZ\nhI6l9y6hQR+MoQ4Xie5PsDoqnY9DJ/lgLhg7mHZNOH+Mw5GJi+HLYHwpz36T5r3O\nGicNaRfJ3tVpq3bLd9rcP9F2v3y5sKq2eSyvxxrIgcX7TlNH8iXxKpPSr0/LJnjU\nARpSTZ14L7evSFqDF7iUGGBZu2XmNHrMndJIsOH168YcQ/VSmYU475Iivh8+9ucB\nJdYM6ngQBzAtEM5/J3If2tfVa0R7j0AlNWK5DfjDqcuNwBgcVk7Tw6lgZV0DGH2o\nVtTwrHfnAgMBAAECggEAHIe4lfnbmpgg5rPMG4l6BP/9VYqO4qgEbhKCksHYHJhj\n9dbTJXK8neC1G8P++jmSg4G1idkfHe+tbBd2ubIvIKEsx/fN9tdiSyAsq5fLFJ9K\nhE2uGPtJV574DiH3R9YE9i5t+iMImGAEm11TXNF6DXDvuOe9L+JieuuoCs9cZAfS\nnjOd4wrC1Pa1MpY09Cqy5BW/NWDkuIlH7kFdJvQsEbIXZ5XUvP5POzD+WT7WfiJz\neW7kbDnJp3HdOAzqGwGWIvBRtwCYUiFEKRLztITfObyK50q8MLvjebAG+PQO+TOx\nS5G/IBT1EOJy1ju9nH7la1XyPlfXTfqr5o/zEx0cWQKBgQDe9zmsHaaLPjV7uIX5\n5sgemsS40gPHJMYFETvz5FcG1gt4Zuia1iYw5Y5DWoddehqoLf64O4P1D/4o+bVm\nw8O30bO/eVex2r+txuJCBxcuiFoCv3giJoguewphGoFKzIAwnBa54Lbru315NbD4\nJ/9ffamPHHiq9IijvN642rDgCQKBgQDQAA/QxMa0i6LrkyoedlNx3G2JiXEVBbiS\nOxvgoyZ0Ss4KXlkeQmhWO2ixnwYBGQG6SDbB59D8fmTrELQQYpGZBaEYckVghWzg\n5O3iQe0bCqX25uXpVIo+BzBLx4aV9qytlro/Fm/7oMR0wRITfj8NJO68bDpfOexI\nujFTYA20bwKBgEgirhr8QMyd5MnRSi8utiIIqoqtD6HXSOWMzNu8TVed2noquSiX\nDiYVrrAl0tOwVH2C2/0Y7DlV4kG5gDHuNhz7kG7rQC7/ebIsPTlld9+LJ6vp7GEI\nHFkFX7dIzvm3LeYMKeIbTLL5pr+XWlj+/8USL9BoQrX0hVyMF3aw8jaZAoGAfa6L\n3+oG5zE40H+sA5wb78DxrxmNatZ6IGH3BlWO9tX8iedYkiAuS2y6Zhlg12j00kqw\nS5p3fRoigKcnJn9o2r28CbmCkkAM+hdaZkzPqHdWsUnzwnmCztgpJqD5gcP7syhQ\nga5dG/6YtrOy6HRwRND8MH51BvVJAOkAxRBVN6ECgYEAzObGWfklY5x/yZffzbWI\nDvdmpW4cspwDn/GtrM/wmkKToVSxvmixdhi9dEgut3Er6ioDwkeVLX/0u+a3nkcl\nMOTWjvWaq0nKDx8IQNGMrxwYg5I8O60dI7eiwDSMmwBTwlfz5+EQ18xK+JVsgAeR\n/y9mk8kOf3WpC5+IXdGWohA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "alarmer-bot@alarmer24.iam.gserviceaccount.com",
+  "client_id": "101250587895720709247",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/alarmer-bot%40alarmer24.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

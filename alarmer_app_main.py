@@ -1,5 +1,5 @@
 import time
-
+from datetime import datetime
 from flask import render_template, request, jsonify, redirect, url_for
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from flask_login import LoginManager, login_user, login_required, UserMixin, logout_user, current_user
@@ -147,7 +147,7 @@ def display_data1():
     conn = connect_db()
     cursor = conn.cursor()
     cursor.execute('''
-        SELECT emails.device_id, emails.subject, emails.addr, emails.alarm, emails.occurred, emails.time,devices.comment, emails.status
+        SELECT emails.device_id, emails.subject, emails.addr, emails.alarm, emails.occurred, emails.time,devices.comment,devices.time_text, emails.status
         FROM emails
         LEFT JOIN devices ON devices.id = emails.device_id
         WHERE emails.s_active = %s
@@ -175,11 +175,12 @@ def display_data2():
 def update_email():
     data = request.json  # Получаем данные из POST запроса, отправленного из вашего веб-приложения
     id = data['id']
-    comment = data['newText']
-
+    dt = f"{datetime.now().strftime('%d/%m/%y')}"
+    comment = f"{data['newText']}"
     conn = connect_db()
     cursor = conn.cursor()
-    cursor.execute("UPDATE devices SET comment = %s WHERE id = %s", (comment, id))
+    print(comment,dt,id)
+    cursor.execute("UPDATE devices SET comment = %s,time_text=%s WHERE id = %s", (comment,dt,id))
     conn.commit()
 
     conn.close()
@@ -204,7 +205,6 @@ def update_status():
 @login_required
 def logout():
     logout_user()
-
 
 
 

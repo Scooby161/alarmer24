@@ -1,66 +1,151 @@
 table {
             border-collapse: collapse;
             width: 50%;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
         }
         th, td {
             border: 1px solid #dddddd;
             text-align: left;
-            padding: 1px;
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            padding: 0px; /* добавим немного отступа внутри ячейки */
+    position: relative; /* установим позицию как относительную */
         }
         th {
             background-color: #f2f2f2;
             cursor: pointer;
         }
+
+
         .button {
-  background-color: #4CAF50; /* Зеленый цвет */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
+            background-color: #4CAF50; /* Зеленый цвет */
+            border: none;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+
+        /* При наведении курсора */
+        .button:hover {
+            background-color: #45a049;
+        }
+        #emailTable tbody tr:hover {
+            background-color: #20B2AA;
+        }
+        tr:hover td {
+            border: 1px solid black;
+        }
+
+        select {
+        width: 100%; /* кнопка будет занимать всю ширину ячейки */
+    height: 100%;
+            border: 0px;
+            color: black;
+            font-family: Arial, sans-serif;
+            font-size: 25px;
+            background-color: rgba(0, 0, 0, 0);
+            text-align: center;
+        }
+
+        .Cheked{
+
+         width: 100%; /* кнопка будет занимать всю ширину ячейки */
+    height: 100%;
+    width: 100%; /* кнопка будет занимать всю ширину ячейки */
+                height: 100%;
+            position: absolute; /* установим позицию как абсолютную */
+                top: 0; /* разместим кнопку в верхнем левом углу ячейки */
+                left: 0;
+
+            border: 0px;
+            color: white;
+            background-color: #479e68;
+
+            font-family: Arial, sans-serif;
+            font-size: 25px;
+            text-align: center;
+        }
+
+        .Control{
+                     width: 100%; /* кнопка будет занимать всю ширину ячейки */
+                height: 100%;
+            position: absolute; /* установим позицию как абсолютную */
+                top: 0; /* разместим кнопку в верхнем левом углу ячейки */
+                left: 0;
+
+            border: 0px;
+            background-color: #b10202;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 25px;
+            text-align: center;
+        }
+
+        .Order{
+
+    height: 100%;
+    width: 100%; /* кнопка будет занимать всю ширину ячейки */
+                height: 100%;
+            position: absolute; /* установим позицию как абсолютную */
+                top: 0; /* разместим кнопку в верхнем левом углу ячейки */
+                left: 0;
+
+            border: 0px;
+
+            background-color: #ffe5a0;
+       color: black;
+            font-family: Arial, sans-serif;
+            font-size: 25px;
+            text-align: center;
+        }
+           .Comment{
+           width: 100%; /* кнопка будет занимать всю ширину ячейки */
+    height: 100%;
+    width: 100%; /* кнопка будет занимать всю ширину ячейки */
+                height: 100%;
+            position: absolute; /* установим позицию как абсолютную */
+                top: 0; /* разместим кнопку в верхнем левом углу ячейки */
+                left: 0;
+color: white;
+            border: 0px;
+            background-color: #6488e3;
+
+            font-family: Arial, sans-serif;
+            font-size: 25px;
+            text-align: center;
+        }
+        .cellWithButton {
+    display: flex; /* Размещаем элементы в одну строку */
+    align-items: stretch; /* Растягиваем элементы по вертикали */
+    padding: 0;
+}
+.newText {
+margin:0;
+    flex: 8; /* Занимает 80% ширины ячейки */
+    color: black;
+    font-family: Arial, sans-serif;
+    font-size: 25px;
+    border: 0px;
+    box-sizing: border-box; /* Учитываем padding и border внутри элемента */
 }
 
-/* При наведении курсора */
-#emailTable table {
-  border-collapse: collapse;
+.button_add {
+margin:0;
+    flex: 2; /* Занимает 20% ширины ячейки */
+    color: black;
+    font-family: Arial, sans-serif;
+    font-size: 25px;
+    border: 0px;
+    background-color: #828282;
+    box-sizing: border-box; /* Учитываем padding и border внутри элемента */
 }
-/* При наведении курсора */
-.button:hover {
-  background-color: #45a049;
+.newText, .button_add {
+    margin: 0;
+    height: 100%; /* Занимаем всю доступную высоту ячейки */
+    box-sizing: border-box; /* Учитываем padding и border внутри элемента */
 }
-#emailTable tbody tr:hover {
-  background-color: #20B2AA;
-}
-tr:hover td{
-  border: 1px solid black;
-}
-
-select{
-  width: 150px;
-      padding: 5px;
-      background-color: white;
-      color: black;
-  }
-    .cheked {
-      width: 150px;
-      padding: 10px;
-      background-color: #ADFF2F;
-      color: black;
-    }
-
-    .control {
-      width: 150px;
-      padding: 10px;
-      background-color: #FF4500;
-      color: white;
-    }
-    .order {
-      width: 150px;
-      padding: 10px;
-      background-color: #FF8C00;
-      color: black;
-    }

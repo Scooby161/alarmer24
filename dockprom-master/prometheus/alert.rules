@@ -50,17 +50,17 @@ groups:
       summary: "db down"
       description: "База упала"
   - alert: backend_down
-     expr: absent(container_memory_usage_bytes{name="backend"})
-     for: 30s
-     labels:
+    expr: absent(container_memory_usage_bytes{name="backend"})
+    for: 30s
+    labels:
        severity: critical
     annotations:
       summary: "backend dowm"
       description: "Веб интерфейс упал"
   - alert: email_down
-     expr: absent(container_memory_usage_bytes{name="email_service"})
-     for: 30s
-     labels:
+    expr: absent(container_memory_usage_bytes{name="email_service"})
+    for: 30s
+    labels:
        severity: critical
     annotations:
       summary: "email_service dowm"
