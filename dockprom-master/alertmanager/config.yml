@@ -9,3 +9,7 @@ receivers:
             username: 'Prometheus'
             channel: '#<channel-name>'
             api_url: 'https://hooks.slack.com/services/<webhook-id>'
+    - name: 'telegram'
+      telegram_configs:
+        - bot_token: "6389154225:AAHkydAGtyUfrsezIsL7nCtJKvbVUVK2UG8"
+          chat_id: -1001731654975
