@@ -292,6 +292,7 @@ def add_email_to_sheet(email_data):
 
 def delete_email_from_sheet(email_data):
     try:
+        time.sleep(1)
         sheet = service.spreadsheets()
         sheet_id = 0
         result = sheet.values().get(
@@ -410,13 +411,15 @@ def process_emails():
                 email_message = email.message_from_bytes(raw_email)
                 get_email_body(email_message)
             disconnect_imap_connection(mail)
-            time.sleep(10)
+            time.sleep(60)
             check_records()
             add_current_datetime_to_sheet()
         except imaplib.IMAP4_SSL.abort as e:
             print(f'IMAP connection aborted: {e}')
             # Обработка возникшего исключения (например, переподключение)
-
+        except Exception as e:
+            print(f"Error all {e}")
+            time.sleep(60)
 
 
         time.sleep(20)

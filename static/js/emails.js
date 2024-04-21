@@ -58,7 +58,21 @@ document.addEventListener('DOMContentLoaded', function() {
                  "inject prob":"#759bfa",
                  "max def time": "#fcef79",
                  "offline block":"#d193ed",
-                 "alarm 1":"#759bfa"
+                 "alarm 1":"#759bfa",
+                 "zabbix":"#c6ff85",
+                 "danfoss esk":"#c6ff85",
+                 "danfoss stavholod":"#c6ff85",
+                 "carel esk":"#c6ff85",
+                 "carel stavholod":"#c6ff85",
+                 "freetech":"#c6ff85",
+                 "vkusvill":"#c6ff85",
+                 "dixell":"#c6ff85",
+                 "lenta":"#c6ff85",
+                 "indis":"#c6ff85",
+                 "ashan":"#c6ff85",
+                 "upo magnit":"#c6ff85",
+                 "aktyalnie zaivki":"#c6ff85",
+                 "freon":"#c6ff85",
 
             };
             var status = data[3];
