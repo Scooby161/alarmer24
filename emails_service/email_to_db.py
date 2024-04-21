@@ -210,7 +210,7 @@ def check_records():
                 'clear': 'false'
             }
             # Если разница больше часа, выводим сообщение в консоль
-            if time_difference.total_seconds() > 10800:
+            if time_difference.total_seconds() > 16200:
                 add_email_to_db(email_data)
                 add_email_to_sheet(email_data)
                 print(f"Время записи отличается от текущего на более чем час: {row}")
@@ -237,9 +237,9 @@ def add_block(data):
         cursor.execute("SELECT * FROM devices WHERE subject = %s AND device_name = %s",
                        (data['ems'], data['addr'],))
         row = cursor.fetchone()
-        return row[0]
+        return
     else:
-        return row[0]
+        return
 def add_device(email_data):
     cursor.execute("SELECT * FROM devices WHERE subject = %s AND device_name = %s",
                    (email_data['subject'], email_data['addr'],))
@@ -344,6 +344,17 @@ def add_email_to_db(email_data):
     except psycopg2.Error as e:
         print('An error occurred:', str(e))
 
+def add_current_datetime_to_sheet():
+    sheet = service.spreadsheets()
+    range = "Sheet2!B2"
+    now = datetime.now()
+    current_datetime = now.strftime('%H:%M:%S')
+    body = {'values': [[current_datetime]]}
+    result = sheet.values().update(
+        spreadsheetId=spreadsheet_id, range=range,
+        valueInputOption='USER_ENTERED', body=body).execute()
+    print(current_datetime)
+    return result.get('updatedCells')
 
 def delete_email_from_db(email_data):
     try:
@@ -401,6 +412,7 @@ def process_emails():
             disconnect_imap_connection(mail)
             time.sleep(10)
             check_records()
+            add_current_datetime_to_sheet()
         except imaplib.IMAP4_SSL.abort as e:
             print(f'IMAP connection aborted: {e}')
             # Обработка возникшего исключения (например, переподключение)
