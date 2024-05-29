@@ -1,10 +1,20 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var table = $('#emailTable').DataTable({
+    $.fn.dataTable.ext.type.order['datetime-custom-pre'] = function (d) {
+    return moment(d, 'DD/MM/YY HH:mm').unix();
+};
+	var table = $('#emailTable').DataTable({
         "paging": false,
         "searching": true,
         "info": false,
         order: [[5, 'desc']],
-        columnDefs: [{ visible: false, targets: 0, searchable: true},{ width: '10%', targets: 6 }],
+        columnDefs: [
+    { visible: false, targets: 0, searchable: true },
+    { width: '10%', targets: 6 },
+    {
+        targets: 5,
+        type: 'datetime-custom' // Specify the data type as "date"
+    }
+],
          buttons: ['showSelected'],
         "rowCallback": function(row, data) {
             var colorMapping = {
@@ -110,6 +120,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     });
 });
+   console.log('Initializing DataTable...');
+$('#emailTable tbody tr').each(function() {
+    console.log($(this).find('td').eq(5).text());
+});
+
     $('#emailTable tbody').on('mouseenter', 'tr', function () {
         $(this).addClass('highlight');
     });
